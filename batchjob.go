@@ -8,12 +8,14 @@ import (
 
 type BatchJob struct {
 	parallism int
+	sleep int
 	jobs      [][]int
 }
 
-func NewBatchJob(seg int) *BatchJob {
+func NewBatchJob(seg, sleep int) *BatchJob {
 	return &BatchJob{
 		parallism: seg,
+		sleep: sleep,
 	}
 }
 
@@ -60,7 +62,7 @@ func (b *BatchJob) Run(f func(wg *sync.WaitGroup, jobs interface{})) {
 			go f(wg, b.jobs[i][j])
 		}
 		wg.Wait()
-		time.Sleep(3 * time.Second)
+		time.Sleep(time.Duration(b.sleep) * time.Second)
 		fmt.Printf("wave: %d, ended: %s\n", i, time.Now().String())
 	}
 }

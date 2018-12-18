@@ -9,6 +9,7 @@ var log = mlog.Log
 const (
 	LEN = 18
 	PARAL = 4
+	SLEEP = 3
 )
 
 func Test_Run(t *testing.T)  {
@@ -23,7 +24,7 @@ func Test_Run(t *testing.T)  {
 		wg.Done()
 	}
 
-	batch := NewBatchJob(PARAL)
+	batch := NewBatchJob(PARAL, SLEEP)
 	batch.Map(numlist)
 	batch.Run(f)
 }
